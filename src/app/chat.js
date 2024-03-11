@@ -1,11 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { MessageList } from "./components/MessageList";
-import { listThread, sendMessage } from "./openai";
+import { createThread, listThread, sendMessage } from "./openai";
 import { Submit } from "./components/Submit";
 
-export function ChatInterface({ threadId }) {
+export function ChatInterface() {
+  let [threadId, setThreadId] = useState(null);
   async function handleSendMessage(formData) {
+    if (threadId === null) {
+      threadId = await createThread();
+      setThreadId(threadId);
+    }
     setInputDisabled(true);
     const message = formData.get("userMsg");
     setMessages([...messages, { isUserMsg: true, text: message }]);
