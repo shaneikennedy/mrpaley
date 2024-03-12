@@ -7,8 +7,8 @@ export function Submit({ inputDisabled, handleMessage }) {
   return (
     <form
       action={(data) => {
-        handleMessage(data);
         setInput("");
+        handleMessage(data);
       }}
       className="flex items-center rounded-b-lg bg-gray-700 px-4 py-2"
     >

@@ -34,22 +34,21 @@ const retryForStatus = (fn, status) => {
 };
 
 export async function createThread() {
-  const thread = await retry(async () => await openai.beta.threads.create());
+  const thread = await retry(() => openai.beta.threads.create());
   return thread.id;
 }
 
 export async function listThread(threadId, runId = null) {
   if (runId !== null) {
     const thread = await retryForStatus(
-      async () => await openai.beta.threads.runs.retrieve(threadId, runId),
+      () => openai.beta.threads.runs.retrieve(threadId, runId),
       "completed",
     );
   }
-  const response = await retry(
-    async () =>
-      await openai.beta.threads.messages.list(threadId, {
-        order: "asc",
-      }),
+  const response = await retry(() =>
+    openai.beta.threads.messages.list(threadId, {
+      order: "asc",
+    }),
   );
   return response.data.map((obj) => ({
     id: obj.id,
@@ -59,18 +58,16 @@ export async function listThread(threadId, runId = null) {
 }
 
 export async function sendMessage(content, threadId) {
-  await retry(
-    async () =>
-      await openai.beta.threads.messages.create(threadId, {
-        role: "user",
-        content,
-      }),
+  await retry(() =>
+    openai.beta.threads.messages.create(threadId, {
+      role: "user",
+      content,
+    }),
   );
-  const run = await retry(
-    async () =>
-      await openai.beta.threads.runs.create(threadId, {
-        assistant_id: assistantId,
-      }),
+  const run = await retry(() =>
+    openai.beta.threads.runs.create(threadId, {
+      assistant_id: assistantId,
+    }),
   );
   return run.id;
 }

@@ -8,16 +8,27 @@ export function ChatInterface() {
   let [threadId, setThreadId] = useState(null);
   async function handleSendMessage(formData) {
     if (threadId === null) {
-      threadId = await createThread();
-      setThreadId(threadId);
+      try {
+        threadId = await createThread();
+        setThreadId(threadId);
+      } catch (e) {
+        alert("Problems starting the conversation :(");
+        return;
+      }
     }
     setInputDisabled(true);
     const message = formData.get("userMsg");
     setMessages([...messages, { isUserMsg: true, text: message }]);
-    const runId = await sendMessage(message, threadId);
-    const newMessages = await listThread(threadId, runId);
-    setMessages(newMessages);
-    setInputDisabled(false);
+    try {
+      const runId = await sendMessage(message, threadId);
+      const newMessages = await listThread(threadId, runId);
+      setMessages(newMessages);
+    } catch (e) {
+      alert("Problems sending your message, please try again :(");
+      setMessages(messages);
+    } finally {
+      setInputDisabled(false);
+    }
   }
   let [inputDisabled, setInputDisabled] = useState(false);
   let [messages, setMessages] = useState([]);
