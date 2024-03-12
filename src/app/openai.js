@@ -20,7 +20,7 @@ const retry = (fn) => {
 
 const retryForStatus = (fn, status) => {
   return polly()
-    .waitAndRetry(10)
+    .waitAndRetry(5)
     .executeForPromise(async () => {
       try {
         let response = await fn();
