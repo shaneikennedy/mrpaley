@@ -1,8 +1,11 @@
+import Image from "next/image";
+import mrpaley from "../../../public/mrpaley.jpeg";
+
 export function PaleyMessage({ message }) {
   return (
     <div className="flex items-start">
-      <img
-        src="mrpaley.jpeg"
+      <Image
+        src={mrpaley}
         alt="Mr. Paley"
         className="mr-2 h-8 w-8 rounded-full"
       />
