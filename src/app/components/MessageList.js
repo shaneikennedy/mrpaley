@@ -4,7 +4,7 @@ import { PaleyMessage } from "./PaleyMessage";
 import { UserMessage } from "./UserMessage";
 
 const initialMessage = {
-  text: "Welcome, bonjour, and valkommen! You can speak to me in any language and I will both converse with you and try to point out your mistakes or where there is another way to say what I think you mean in a more common way. Try saying something to me in a language of your choice",
+  text: "Welcome, bonjour, and välkommen! You can speak to me in any language and I will both converse with you and try to point out your mistakes or where there is another way to say what I think you mean in a more common way. Try saying something to me in a language of your choice",
   isUserMsg: false,
 };
 export function MessageList({ messages }) {
