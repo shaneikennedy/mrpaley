@@ -18,20 +18,21 @@ export function ChatInterface() {
     }
     setInputDisabled(true);
     const message = formData.get("userMsg");
-    setMessages([...messages, { isUserMsg: true, text: message }]);
     try {
       const runId = await sendMessage(message, threadId);
-      const newMessages = await listThread(threadId, runId);
-      setMessages(newMessages);
+      setMessages(await listThread(threadId, runId));
     } catch (e) {
       alert("Problems sending your message, please try again :(");
       setMessages(messages);
-    } finally {
-      setInputDisabled(false);
     }
+    setInputDisabled(false);
   }
   let [inputDisabled, setInputDisabled] = useState(false);
   let [messages, setMessages] = useState([]);
+
+  function pushMessage(content) {
+    setMessages([...messages, { isUserMsg: true, text: content }]);
+  }
   return (
     <div className="flex h-screen items-center justify-center bg-gray-900">
       <div className="flex h-full w-full max-w-lg flex-col rounded-lg bg-gray-800 shadow-lg">
@@ -45,6 +46,7 @@ export function ChatInterface() {
         <Submit
           inputDisabled={inputDisabled}
           handleMessage={handleSendMessage}
+          updateMessages={pushMessage}
         />
       </div>
     </div>

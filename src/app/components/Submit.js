@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export function Submit({ inputDisabled, handleMessage }) {
+export function Submit({ inputDisabled, handleMessage, updateMessages }) {
   let [input, setInput] = useState("");
   const onChange = (e) => setInput(e.target.value);
   return (
@@ -14,10 +14,11 @@ export function Submit({ inputDisabled, handleMessage }) {
         </div>
       )}
       <form
-        action={(data) => {
+        onSubmit={() => {
+          updateMessages(input);
           setInput("");
-          handleMessage(data);
         }}
+        action={handleMessage}
         className="flex items-center rounded-b-lg bg-gray-700 px-4 py-2"
       >
         <input
