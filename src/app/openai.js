@@ -40,7 +40,7 @@ export async function createThread() {
 
 export async function listThread(threadId, runId = null) {
   if (runId !== null) {
-    const thread = await retryForStatus(
+    await retryForStatus(
       () => openai.beta.threads.runs.retrieve(threadId, runId),
       "completed",
     );
