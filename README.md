@@ -4,4 +4,4 @@
   <img src="public/mrpaley.jpeg" alt="Mr. Paley" />
 </p>
 
-Chat in any language you want and get feedback on spelling, grammar, or just if there's a more common way to say the thing you're trying to say.
+Chat in any language you want and get feedback on spelling, grammar, or just if there's a more common way to say the thing you're trying to say. Try it at https://mrpaley.vercel.app/
