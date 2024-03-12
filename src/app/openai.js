@@ -5,14 +5,6 @@ const openai = new OpenAI();
 
 const assistantId = "asst_c5HjkhwwZFsrLf9Lst54EJTk";
 
-export async function getPaleyCompletion(content) {
-  const chatCompletion = await openai.chat.completions.create({
-    messages: [{ role: "user", content }],
-    model: "gpt-3.5-turbo",
-  });
-  return chatCompletion.choices[0].message.content;
-}
-
 export async function createThread() {
   const thread = await openai.beta.threads.create();
   return thread.id;
@@ -43,6 +35,5 @@ export async function sendMessage(content, threadId) {
   const run = await openai.beta.threads.runs.create(threadId, {
     assistant_id: assistantId,
   });
-  console.log(run.id);
   return run.id;
 }
