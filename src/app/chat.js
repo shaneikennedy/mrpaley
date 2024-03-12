@@ -7,6 +7,7 @@ import { Submit } from "./components/Submit";
 export function ChatInterface() {
   let [threadId, setThreadId] = useState(null);
   async function handleSendMessage(formData) {
+    // Create thread
     if (threadId === null) {
       try {
         threadId = await createThread();
@@ -16,14 +17,27 @@ export function ChatInterface() {
         return;
       }
     }
+
+    // Send the message
     setInputDisabled(true);
     const message = formData.get("userMsg");
+    let runId = null;
     try {
-      const runId = await sendMessage(message, threadId);
-      setMessages(await listThread(threadId, runId));
+      runId = await sendMessage(message, threadId);
     } catch (e) {
       alert("Problems sending your message, please try again :(");
       setMessages(messages);
+      return;
+    }
+
+    // Retrieve the thread on the server
+    try {
+      const newMessages = await listThread(threadId, runId);
+      setMessages(newMessages);
+    } catch (e) {
+      alert(
+        "Mr. Paley is taking too long to get back to you, try waiting a few seconds and then refreshing the messages.",
+      );
     }
     setInputDisabled(false);
   }

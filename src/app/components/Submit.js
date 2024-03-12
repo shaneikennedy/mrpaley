@@ -1,26 +1,21 @@
 "use client";
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
 
 export function Submit({ inputDisabled, handleMessage, updateMessages }) {
   let [input, setInput] = useState("");
+  const status = useFormStatus();
   const onChange = (e) => setInput(e.target.value);
   return (
-    <div>
-      {inputDisabled && (
-        <div className="left-2 mb-2 ml-4 flex w-full text-gray-400">
-          <div className="mr-1 h-3 w-3 animate-bounce rounded-full bg-gray-400"></div>
-          <div className="mr-1 h-3 w-3 animate-bounce rounded-full bg-gray-400 delay-75"></div>
-          <div className="mr-1 h-3 w-3 animate-bounce rounded-full bg-gray-400 delay-150"></div>
-        </div>
-      )}
-      <form
-        onSubmit={() => {
-          updateMessages(input);
-          setInput("");
-        }}
-        action={handleMessage}
-        className="flex items-center rounded-b-lg bg-gray-700 px-4 py-2"
-      >
+    <form
+      onSubmit={() => {
+        updateMessages(input);
+        setInput("");
+      }}
+      action={handleMessage}
+    >
+      <Elipsis />
+      <div className="flex items-center rounded-b-lg bg-gray-700 px-4 py-2">
         <input
           name="userMsg"
           type="text"
@@ -36,7 +31,22 @@ export function Submit({ inputDisabled, handleMessage, updateMessages }) {
         >
           Send
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
+  );
+}
+
+function Elipsis() {
+  const { pending } = useFormStatus();
+  return (
+    <section>
+      {pending && (
+        <div className="left-2 mb-2 ml-4 flex w-full text-gray-400">
+          <div className="mr-1 h-3 w-3 animate-bounce rounded-full bg-gray-100"></div>
+          <div className="mr-1 h-3 w-3 animate-bounce rounded-full bg-gray-100 delay-75"></div>
+          <div className="mr-1 h-3 w-3 animate-bounce rounded-full bg-gray-100 delay-150"></div>
+        </div>
+      )}
+    </section>
   );
 }
