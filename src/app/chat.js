@@ -8,7 +8,6 @@ import Image from "next/image";
 
 export function ChatInterface() {
   let [threadId, setThreadId] = useState(null);
-  let [showRefresh, setShowRefresh] = useState(false);
   let [messages, setMessages] = useState([]);
 
   async function handleSendMessage(formData) {
@@ -38,7 +37,6 @@ export function ChatInterface() {
       const newMessages = await listThread(threadId, runId);
       setMessages(newMessages);
     } catch (e) {
-      setShowRefresh(true);
       pushMessage(
         "Mr. Paley is taking too long to get back to you, try waiting a few seconds and then refreshing the messages.",
         null,
@@ -51,9 +49,7 @@ export function ChatInterface() {
   }
 
   function refreshMessages() {
-    listThread(threadId)
-      .then((msgs) => setMessages(msgs))
-      .then(() => setShowRefresh(false));
+    listThread(threadId).then((msgs) => setMessages(msgs));
   }
 
   return (
@@ -71,7 +67,7 @@ export function ChatInterface() {
         {/* Chat messages */}
         <MessageList messages={messages} />
         {/* Chat input */}
-        {showRefresh && (
+        {messages.length > 0 && (
           <button className="mb-1 text-gray-200" onClick={refreshMessages}>
             Refresh messages
           </button>
