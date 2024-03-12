@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
-export function Submit({ inputDisabled, handleMessage, updateMessages }) {
+export function Submit({ handleMessage, updateMessages }) {
   let [input, setInput] = useState("");
   const status = useFormStatus();
   const onChange = (e) => setInput(e.target.value);
@@ -26,7 +26,6 @@ export function Submit({ inputDisabled, handleMessage, updateMessages }) {
         />
         <button
           type="submit"
-          disabled={inputDisabled}
           className="ml-2 rounded-full bg-blue-500 px-4 py-2 text-white"
         >
           Send
