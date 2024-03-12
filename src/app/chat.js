@@ -56,7 +56,7 @@ export function ChatInterface() {
     <div className="flex h-screen items-center justify-center bg-gray-900">
       <div className="flex h-full w-full max-w-lg flex-col rounded-lg bg-gray-800 shadow-lg">
         {/* Chat header */}
-        <div className="flex items-center rounded-t-lg bg-gray-700 px-4 py-2">
+        <div className="sticky flex items-center rounded-t-lg bg-gray-700 px-4 py-2">
           <Image
             src={mrpaley}
             alt="Mr. Paley"
